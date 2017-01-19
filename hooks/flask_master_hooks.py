@@ -33,6 +33,12 @@ def start():
 def stop():
     pass
 
+@hooks.hook('flask-slave-relation-broken')
+@hooks.hook('flask-slave-relation-departed')
+@hooks.hook('flask-slave-relation-changed')
+def noop():
+    pass
+
 if __name__ == "__main__":
     # execute a hook based on the name the program is called by
     hooks.execute(sys.argv)
