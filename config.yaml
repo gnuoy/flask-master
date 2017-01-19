@@ -1,14 +1,5 @@
 options:
-  string-option:
+  motd:
     type: string
-    default: "Default Value"
+    default: "Default Message from master"
     description: "A short description of the configuration option"
-  boolean-option:
-    type: boolean
-    default: False
-    description: "A short description of the configuration option"
-  int-option:
-    type: int
-    default: 9001
-    description: "A short description of the configuration option"
-

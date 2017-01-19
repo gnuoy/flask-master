@@ -16,7 +16,14 @@ def install():
 
 @hooks.hook('config-changed')
 def config_changed():
-    pass
+    for rid in hookenv.relation_ids('flask-slave'):
+        flask_slave_joined(rid)
+
+
+@hooks.hook('flask-slave-relation-joined')
+def flask_slave_joined(rid=None):
+    hookenv.relation_set(relation_id=rid,
+                         motd=hookenv.config('motd'))
 
 @hooks.hook('start')
 def start():
