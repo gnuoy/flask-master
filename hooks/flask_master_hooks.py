@@ -16,11 +16,11 @@ def install():
 
 @hooks.hook('config-changed')
 def config_changed():
-    for rid in hookenv.relation_ids('flask-slave'):
+    for rid in hookenv.relation_ids('flask-master'):
         flask_slave_joined(rid)
 
 
-@hooks.hook('flask-slave-relation-joined')
+@hooks.hook('flask-master-relation-joined')
 def flask_slave_joined(rid=None):
     hookenv.relation_set(relation_id=rid,
                          motd=hookenv.config('motd'))
@@ -33,9 +33,10 @@ def start():
 def stop():
     pass
 
-@hooks.hook('flask-slave-relation-broken')
-@hooks.hook('flask-slave-relation-departed')
-@hooks.hook('flask-slave-relation-changed')
+@hooks.hook('upgrade-charm')
+@hooks.hook('flask-master-relation-broken')
+@hooks.hook('flask-master-relation-departed')
+@hooks.hook('flask-master-relation-changed')
 def noop():
     pass
 
