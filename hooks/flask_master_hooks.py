@@ -5,14 +5,16 @@ import sys
 
 sys.path.insert(0, os.path.join(os.environ['CHARM_DIR'], 'lib'))
 
-import charmhelpers.core.hookenv as hookenv
+import charmhelpers.core.hookenv as hookenv  # noqa: E402
 
 hooks = hookenv.Hooks()
 log = hookenv.log
 
+
 @hooks.hook('install')
 def install():
     pass
+
 
 @hooks.hook('config-changed')
 def config_changed():
@@ -22,16 +24,23 @@ def config_changed():
 
 @hooks.hook('flask-master-relation-joined')
 def flask_slave_joined(rid=None):
-    hookenv.relation_set(relation_id=rid,
-                         motd=hookenv.config('motd'))
+    elaborate = hookenv.config('elaborate')
+    motd = hookenv.config('motd')
+    if elaborate:
+        # motd = "Our amazing MOTD is '{}'".format(motd)
+        motd = 'the motd is, err, broken'
+    hookenv.relation_set(relation_id=rid, motd=motd)
+
 
 @hooks.hook('start')
 def start():
     pass
 
+
 @hooks.hook('stop')
 def stop():
     pass
+
 
 @hooks.hook('upgrade-charm')
 @hooks.hook('flask-master-relation-broken')
